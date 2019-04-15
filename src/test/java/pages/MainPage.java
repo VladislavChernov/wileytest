@@ -54,16 +54,5 @@ public class MainPage extends AbstractPage{
 		return parentMenuItem.findElements(By.xpath(".//li"));
 		 
 	}
-	
-	public void takeScreenShot(){
-		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String path = "./" + screenshot.getName();
-		try {
-			FileUtils.copyFile(screenshot, new File(path));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-	}
-	
+
 }
