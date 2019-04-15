@@ -37,9 +37,9 @@ public class MainPage extends AbstractPage{
 	public WebElement navigateThroughMenu(String text){
 		//проверку, что такое элемент существует писать не буду.
 		ArrayList<String> menuPath = new ArrayList<String>(Arrays.asList(text.split("-")));
-		//String[] menuPath = text.split("-");
 		WebElement menuElement = getRootMenu(menuPath.get(0));
 		menuPath.remove(0);
+		
 		for(String el : menuPath){
 			(new Actions(driver)).moveToElement(menuElement).build().perform();
 			takeScreenShot();
@@ -49,7 +49,7 @@ public class MainPage extends AbstractPage{
 		takeScreenShot();
 		return menuElement;
 	}
-	//  //ul[contains(@class, "dropdown-items")
+
 	public List<WebElement> getSubmenuItems(WebElement parentMenuItem){
 		return parentMenuItem.findElements(By.xpath(".//li"));
 		 

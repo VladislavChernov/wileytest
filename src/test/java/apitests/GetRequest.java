@@ -24,7 +24,6 @@ public class GetRequest {
             
 
         } finally {
-        	 
         	retCode = con.getResponseCode();
             con.disconnect();
         }
