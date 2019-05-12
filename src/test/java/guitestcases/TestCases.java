@@ -1,20 +1,18 @@
 package guitestcases;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.codehaus.plexus.personality.plexus.lifecycle.phase.Suspendable;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-
+import org.testng.asserts.SoftAssert;
 import pages.MainPage;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TestCases extends BaseTestCase{
 
 	@Test
 	public void checkLinksOnTopMenuDisplayed() {
+		SoftAssert sa = new SoftAssert();
 
 		MainPage mp = new MainPage(driver);
 
@@ -26,7 +24,9 @@ public class TestCases extends BaseTestCase{
 
 	@Test
 	public void checkItemsUnderWhoWeServe(){
-		
+
+		SoftAssert sa = new SoftAssert();
+
 		List<String> subHeaders = Arrays.asList("Students","Instructors", "Book Authors",
 				"Professionals", "Researchers", "Institutions", "Librarians", 
 				"Corporations", "Societies", "Journal Editors", "Bookstores", "Government");
@@ -37,11 +37,12 @@ public class TestCases extends BaseTestCase{
 		List<WebElement> subMenuItems = mp.getSubmenuItems(menuItem);
 
 		
-		sa.assertEquals(subMenuItems.size(), 12); //на данный момент там 12 пунктов в меню.
+		sa.assertEquals(subMenuItems.size(), 11); //на данный момент там 12 пунктов в меню.
 
-		for(WebElement el : subMenuItems) {
-			sa.assertTrue(subHeaders.contains(el.getText().trim()));
+		for (WebElement el : subMenuItems) {
+			sa.assertTrue(subHeaders.contains(el.getText().trim()), "Элемент " + el.getText() + " отсутствует.");
 		}
 		sa.assertAll();
 	}
+
 }

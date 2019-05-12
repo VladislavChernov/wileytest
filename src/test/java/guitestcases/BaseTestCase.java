@@ -1,21 +1,22 @@
 package guitestcases;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.testng.asserts.SoftAssert;
-
 import util.WebDriverFactory;
+
+import java.util.concurrent.TimeUnit;
+
+import static util.Utils.takeScreenShot;
+
 
 public class BaseTestCase {
 	
 	protected static WebDriver driver;
-	
-	public SoftAssert sa = new SoftAssert();
 	
 	@BeforeSuite
 	public static void setUp(){
@@ -25,10 +26,19 @@ public class BaseTestCase {
 		if(driver.findElement(By.xpath("//div[@class='modal-dialog']")).isDisplayed()) {
 			driver.findElement(By.xpath("//div[@class='modal-footer']/button[contains(text(),'YES')]")).click();
 		}
+		driver.manage().window().maximize();
 	}
-	
+
+
+	@AfterMethod
+    public void takeScreenshotOnError(ITestResult result) {
+	    if(!result.isSuccess()) {
+            takeScreenShot(driver, result.getName());
+        }
+    }
+
 	@AfterSuite
 	public static void tearDown(){
-		driver.close();
+		driver.quit();
 	}
 }

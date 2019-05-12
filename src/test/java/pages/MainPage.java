@@ -1,20 +1,17 @@
 package pages;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainPage extends AbstractPage{
 
@@ -42,15 +39,14 @@ public class MainPage extends AbstractPage{
 		
 		for(String el : menuPath){
 			(new Actions(driver)).moveToElement(menuElement).build().perform();
-			takeScreenShot();
 			menuElement = getSubMenuElement(menuElement, el);
 		}
 		(new Actions(driver)).moveToElement(menuElement).build().perform();
-		takeScreenShot();
 		return menuElement;
 	}
 
 	public List<WebElement> getSubmenuItems(WebElement parentMenuItem){
+		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//ul[contains(@class, 'dropdown-items')]")));
 		return parentMenuItem.findElements(By.xpath(".//li"));
 		 
 	}
