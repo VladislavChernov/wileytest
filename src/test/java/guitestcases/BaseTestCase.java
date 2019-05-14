@@ -4,19 +4,22 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
+import util.ListenerWithScreenShot;
 import util.WebDriverFactory;
 
 import java.util.concurrent.TimeUnit;
 
 import static util.Utils.takeScreenShot;
 
-
+@Listeners(ListenerWithScreenShot.class)
 public class BaseTestCase {
 	
-	protected static WebDriver driver;
+	public static WebDriver driver;
 	
 	@BeforeSuite
 	public static void setUp(){
@@ -33,7 +36,8 @@ public class BaseTestCase {
 	@AfterMethod
     public void takeScreenshotOnError(ITestResult result) {
 	    if(!result.isSuccess()) {
-            takeScreenShot(driver, result.getName());
+            //takeScreenShot(driver, result.getName());
+			Reporter.log("<a href='"+ takeScreenShot(driver, result.getName()) + "'> <img src='"+ takeScreenShot(driver, result.getName())+ "' height='100' width='100'/> </a>");
         }
     }
 
